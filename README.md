@@ -6,13 +6,13 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
-composer create-project laravel/laravel laraveli
-cd laraveli
-composer require laravel/breeze --dev
-php artisan breeze:install react
-npm install
+composer create-project laravel/laravel laraveli <br>
+cd laraveli <br>
+composer require laravel/breeze --dev <br>
+php artisan breeze:install react <br>
+npm install <br>
 
-Konfiguracija ir migracijos
+Konfiguracija ir migracijos <br>
 
 ## About Laravel
 
