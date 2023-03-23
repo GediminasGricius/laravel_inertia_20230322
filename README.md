@@ -6,6 +6,23 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+<h2>Užduotis</h2>
+<hr>
+Sukurkite kontaktų DB aplikaciją. Programoje tur būti saugomi kontaktai: <br>
+vardas <br>
+pavardė <br>
+tel. nr. <br>
+el. pašto adresas <br>
+asmeninė svetainė (www...) <br>
+tipas<br><br>
+
+Tipai (šeima, bendradarbiai, studijų draugai) turi būti saugomi atskiroje lentelėje:<br>
+pavadinimas<br>
+prioritetas (skičius)<br><br>
+Suprogramuokite CRUD veiksmus lentelėsm Kontaktai ir Tipai
+
+<hr>
+
 composer create-project laravel/laravel laraveli <br>
 cd laraveli <br>
 composer require laravel/breeze --dev <br>

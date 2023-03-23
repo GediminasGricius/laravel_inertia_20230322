@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ClubController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,3 +47,6 @@ Route::get('/pirmas', function (){
 Route::get('/antras', function (){
     return Inertia::render('Antras');
 })->name("antras");
+
+Route::resource('clubs', ClubController::class);
+Route::resource('participants', ParticipantController::class);
