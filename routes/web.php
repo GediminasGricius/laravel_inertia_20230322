@@ -40,13 +40,18 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/pirmas', function (){
-   return Inertia::render('Pirmas');
+   return Inertia::render('Pirmas', ["sk"=>5]);
 })->name("pirmas");
 
 
 Route::get('/antras', function (){
     return Inertia::render('Antras');
 })->name("antras");
+
+Route::post('/users', function (){
+    return Inertia::render('Antras');
+})->name("users");
+
 
 Route::resource('clubs', ClubController::class);
 Route::resource('participants', ParticipantController::class);

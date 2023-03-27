@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Club;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,9 @@ class ParticipantController extends Controller
      */
     public function create()
     {
-        //
+        return inertia("Participants/Create",[
+            "clubs"=>Club::all()
+        ]);
     }
 
     /**
@@ -30,7 +33,24 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+           'name'=>'required|min:3',
+           'surname'=>'required|min:3',
+           'birth_day'=>'required',
+            'club_id'=>'required',
+        ],
+        ['name'=>"Vardas yra privalomas ir ne trumpesnis nei 3 simboliai"]);
+
+        $participant=new Participant();
+        $participant->name=$request->name;
+        $participant->surname=$request->surname;
+        $participant->birth_day=$request->birth_day;
+        $participant->school=$request->school;
+        $participant->club_id=$request->club_id;
+        $participant->save();
+
+        return to_route("participants.index");
+
     }
 
     /**
