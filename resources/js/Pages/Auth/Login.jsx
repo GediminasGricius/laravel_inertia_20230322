@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import AppLayout from "@/Layouts/AppLayout";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -27,72 +28,46 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
+        <AppLayout>
+            <div className="col-md-8">
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            <main className="form-signin w-100 m-auto">
+                <form onSubmit={submit}>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
+                        <div className="form-floating">
+                            <input id="email"
+                                   type="email"
+                                   name="email"
+                                   value={data.email}
+                                   onChange={(e) => setData('email', e.target.value)}
+                                   className="form-control"
+                                   placeholder="name@example.com" />
+                                <label htmlFor="floatingInput">Email address</label>
+                        </div>
+                        <div className="form-floating">
+                            <input  id="password"
+                                    type="password"
+                                    name="password"
+                                    value={data.password}
+                                    onChange={(e) => setData('password', e.target.value)}
+                                    className="form-control"
+                                   placeholder="Password" />
+                                <label htmlFor="floatingPassword">Password</label>
+                        </div>
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
+                        <div className="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" value="remember-me" /> Remember me
+                            </label>
+                        </div>
+                        <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                </form>
+            </main>
+        </div>
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
-                        />
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ml-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                    <Link href={ route('pirmas') }>Pirmas</Link>
-                </div>
-            </form>
-        </GuestLayout>
+        </AppLayout>
     );
 }

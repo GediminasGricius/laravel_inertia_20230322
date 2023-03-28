@@ -11,10 +11,26 @@ class ParticipantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $emFilter=new \stdClass();
+        $emFilter->name=null;
+        $emFilter->surname=null;
+        $emFilter->club_id=null;
+
+        $emOrder=new \stdClass();
+        $emOrder->field=null;
+        $emOrder->dir=null;
+
+       $filter=$request->session()->get("participant_filter", $emFilter);
+       $order=$request->session()->get("participant_order", $emOrder);
+
        return inertia("Participants/Index",[
-                "participants"=>Participant::with("club")->get()
+                "participants"=>Participant::filter($filter)->order($order)->with("club")->get(),
+                "clubs"=>Club::all(),
+                "filter"=>$filter,
+                "order"=>$order,
            ]);
     }
 
@@ -83,5 +99,23 @@ class ParticipantController extends Controller
     public function destroy(Participant $participant)
     {
         //
+    }
+
+    public function filter(Request $request){
+        $filter=new \stdClass();
+        $filter->name=$request->name;
+        $filter->surname=$request->surname;
+        $filter->club_id=$request->club_id;
+
+        $request->session()->put("participant_filter",$filter);
+        to_route("participants.index");
+    }
+
+    public function order($field, $dir, Request $request){
+        $order=new \stdClass();
+        $order->field=$field;
+        $order->dir=$dir;
+        $request->session()->put("participant_order",$order);
+        to_route("participants.index");
     }
 }

@@ -1,16 +1,34 @@
 import AppLayout from "@/Layouts/AppLayout";
 import {Link, router} from "@inertiajs/react";
+import {useState} from "react";
 
 export default function Index(props){
 
     const clubsList=[];
 
     const handleDelete=(event)=>{
-        // console.log(event.target.value);
         router.delete( route("clubs.destroy", event.target.value) );
     }
+    const [order, setOrder]=useState({
+        field:"name",
+        dir:1
+    });
 
-    props.clubs.forEach((club)=>{
+    let clubs=props.clubs;
+    clubs.sort(
+        (a, b)=>{
+            if (a[order.field]>b[order.field]){
+                return 1*order.dir;
+            }
+            if (a[order.field]<b[order.field]){
+                return -1*order.dir;
+            }
+            return 0
+        }
+    );
+
+
+    clubs.forEach((club)=>{
         clubsList.push(
             <tr key={club.id}>
                 <td>{ club.name}</td>
@@ -26,6 +44,8 @@ export default function Index(props){
         )
     });
 
+
+
     return (
         <AppLayout>
             <div className="col-md-12 mt-5">
@@ -36,8 +56,16 @@ export default function Index(props){
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th>Pavadinimas</th>
-                                    <th>Vietų kiekis</th>
+                                    <th>
+                                        <span onClick={ ()=>{setOrder({field:"name", dir:1} )} }>
+                                            Pavadinimas
+                                            </span>
+                                    </th>
+                                    <th>
+                                        <span onClick={ ()=>{setOrder({field:"maximum_number", dir:1} )} }>
+                                            Vietų kiekis
+                                        </span>
+                                        </th>
                                     <th>Vieta</th>
                                     <th colSpan="2" className="text-center">Veiksmai</th>
                                 </tr>

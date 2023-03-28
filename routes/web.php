@@ -19,16 +19,11 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return to_route("clubs.index");
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return to_route("clubs.index");
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -52,6 +47,11 @@ Route::post('/users', function (){
     return Inertia::render('Antras');
 })->name("users");
 
+Route::post("/participants/filter", [ParticipantController::class, "filter"])->name("participants.filter");
+Route::get("/participants/order/{field}/{dir}", [ParticipantController::class, "order"])->name("participants.order");
+
 
 Route::resource('clubs', ClubController::class);
 Route::resource('participants', ParticipantController::class);
+
+

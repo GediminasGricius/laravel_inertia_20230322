@@ -40,7 +40,7 @@ export default function Create(props){
    }
 
     const handleChange=(event)=>{
-        data [event.target.id]=event.target.value;
+        data[event.target.id]=event.target.value;
         validate();
         setData({
            ...data,
@@ -60,6 +60,7 @@ export default function Create(props){
 
     const handleBlur=(event)=>{
         isDirtyField[event.target.id]=true;
+
         setDirtyField({
             ...isDirtyField,
             [event.target.id]:true
