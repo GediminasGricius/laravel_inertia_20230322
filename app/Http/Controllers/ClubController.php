@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Club;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class ClubController extends Controller
@@ -14,8 +15,10 @@ class ClubController extends Controller
     public function index()
     {
 
-        $clubs=Club::all();
+        //$clubs=Club::all();
+        $clubs=Club::with("participants")->get();
         return inertia('Clubs/Index', [
+
             "clubs"=>$clubs
         ]);
     }

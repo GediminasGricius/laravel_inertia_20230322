@@ -4,6 +4,7 @@ import {useState} from "react";
 
 export default function Index(props){
 
+
     const participantsList=[];
 
     const [filter,setFilter]=useState({
@@ -49,7 +50,9 @@ export default function Index(props){
     })
 
     return (
-        <AppLayout>
+        <AppLayout
+
+            >
             <div className="col-md-12 mt-5">
                 <div className="card">
                     <div className="card-header">Dalyvių sąrašas</div>

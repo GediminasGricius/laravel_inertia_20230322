@@ -51,7 +51,16 @@ Route::post("/participants/filter", [ParticipantController::class, "filter"])->n
 Route::get("/participants/order/{field}/{dir}", [ParticipantController::class, "order"])->name("participants.order");
 
 
-Route::resource('clubs', ClubController::class);
+Route::resource('clubs', ClubController::class)->only([
+    'index'
+]);
+
+Route::middleware("editClubs")->group( function(){
+    Route::resource('clubs', ClubController::class)->except([
+        'index'
+    ]);
+});
+
 Route::resource('participants', ParticipantController::class);
 
 

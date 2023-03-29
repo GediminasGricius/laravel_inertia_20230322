@@ -4,7 +4,11 @@ import {useState} from "react";
 
 export default function Index(props){
 
+
+console.log(props.clubs);
     const clubsList=[];
+    // props.can.editClubs
+    const editClubs=props.auth.user!=null && props.auth.user.type==1;
 
     const handleDelete=(event)=>{
         router.delete( route("clubs.destroy", event.target.value) );
@@ -35,10 +39,10 @@ export default function Index(props){
                 <td>{ club.maximum_number}</td>
                 <td>{ club.location}</td>
                 <td className="text-center">
-                    <Link className="btn btn-primary" href={ route('clubs.edit', club.id)}>Redaguoti</Link>
+                    { editClubs && <Link className="btn btn-primary" href={ route('clubs.edit', club.id)}>Redaguoti</Link> }
                 </td>
                 <td className="text-center">
-                    <button className="btn btn-danger" onClick={handleDelete} value={club.id}>Ištrinti</button>
+                    { editClubs &&  <button className="btn btn-danger" onClick={handleDelete} value={club.id}>Ištrinti</button> }
                 </td>
             </tr>
         )
@@ -47,12 +51,14 @@ export default function Index(props){
 
 
     return (
-        <AppLayout>
+        <AppLayout
+
+        >
             <div className="col-md-12 mt-5">
                 <div className="card">
                     <div className="card-header">Būrelių sąrašas</div>
                     <div className="card-body">
-                        <Link className="btn btn-success float-end" href={ route("clubs.create") }>Pridėti naują būrelį</Link>
+                        { editClubs && <Link className="btn btn-success float-end" href={ route("clubs.create") }>Pridėti naują būrelį</Link> }
                         <table className="table">
                             <thead>
                                 <tr>

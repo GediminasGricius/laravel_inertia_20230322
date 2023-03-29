@@ -29,14 +29,16 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <AppLayout>
-            <div className="col-md-8">
+            <div className="col-md-6 offset-md-3 mt-5">
 
             <main className="form-signin w-100 m-auto">
+                <div className="card">
+                    <div className="card-body">
                 <form onSubmit={submit}>
 
-                        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+                        <h1 className="h3 mb-3 fw-normal">Prisijungti</h1>
 
-                        <div className="form-floating">
+                        <div className="form-floating mb-3">
                             <input id="email"
                                    type="email"
                                    name="email"
@@ -65,6 +67,8 @@ export default function Login({ status, canResetPassword }) {
                         <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
                 </form>
+                    </div>
+                </div>
             </main>
         </div>
 

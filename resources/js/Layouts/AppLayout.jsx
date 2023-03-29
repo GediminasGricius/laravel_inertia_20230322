@@ -1,8 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import {Link} from "@inertiajs/react";
+import {Link, usePage} from "@inertiajs/react";
 
-export default function AppLayout({children}) {
-
+export default function AppLayout({ children}) {
+    const {auth, pavadinimas}=usePage().props;
+    const user=auth.user;
+    console.log(pavadinimas);
     return (
         <div className="container">
             <div className="row">
@@ -23,19 +25,24 @@ export default function AppLayout({children}) {
                                     <Link href={ route("participants.index")} className="nav-link ">Dalyvių sąrašas</Link>
                                 </li>
                             </ul>
-
-                            <ul className="navbar-nav float-end">
-                                <li className="nav-item">
-                                    <Link href={ route("login")} className="nav-link ">Prisijungti</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link href={ route("register")} className="nav-link ">Registruotis</Link>
-                                </li>
-                                <li>
-                                    <Link href={route('logout')} method="post" as="button">Atsijungti</Link>
-                                </li>
-                            </ul>
                         </div>
+                        {user==null ?
+                            <div className="float-end">
+
+                                    <Link className="btn btn-primary mr-3 "  href={ route("login")} >Prisijungti</Link>
+                                &nbsp;
+
+
+                                    <Link className="btn btn-info "  href={ route("register")} >Registruotis</Link>
+
+                            </div>
+                            :
+                            <div className="float-end">
+                                <span >Jūs esate prisijungęs kaip: <b>{user.name} ({user.type==1?"administratorius":"vartotojas"})</b> </span>
+                                <Link className="btn btn-warning " href={route('logout')} method="post" >Atsijungti</Link>
+
+                            </div>
+                        }
                     </div>
                 </nav>
                 {children}
