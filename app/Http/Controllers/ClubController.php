@@ -15,11 +15,18 @@ class ClubController extends Controller
     public function index()
     {
 
+
+
+
         //$clubs=Club::all();
         $clubs=Club::with("participants")->get();
         return inertia('Clubs/Index', [
 
-            "clubs"=>$clubs
+            "clubs"=>$clubs,
+            "lang"=>[
+                "clubs"=>__("app.clubs"),
+                "clubsCreate"=>__("app.clubsCreate")
+            ]
         ]);
     }
 
@@ -40,6 +47,11 @@ class ClubController extends Controller
         $club->name=$request->name;
         $club->maximum_number=$request->maximum_number;
         $club->location=$request->location;
+        if ($request->file("image")!=null){
+            $request->file("image")->store("/public/clubs");
+            $club->image=$request->file("image")->hashName();
+        }
+
         $club->save();
         return to_route('clubs.index');
 
@@ -71,6 +83,15 @@ class ClubController extends Controller
         $club->name=$request->name;
         $club->maximum_number=$request->maximum_number;
         $club->location=$request->location;
+
+        if ($request->file("image")!=null){
+            if ($club->image!=null){
+                unlink(storage_path()."/app/public/clubs/".$club->image);
+            }
+            $request->file("image")->store("/public/clubs");
+            $club->image=$request->file("image")->hashName();
+        }
+
         $club->save();
         return to_route('clubs.index');
     }

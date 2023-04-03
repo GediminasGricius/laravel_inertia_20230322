@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("surname");
             $table->timestamp("birth_day");
             $table->string("school");
-            $table->foreignId("club_id")->constrained();
+            $table->foreignId("club_id")->nullable()->default(null)->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

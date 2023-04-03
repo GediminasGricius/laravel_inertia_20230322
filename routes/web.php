@@ -19,48 +19,54 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return to_route("clubs.index");
+    return Inertia::render("Home");
 });
 
-Route::get('/dashboard', function () {
-    return to_route("clubs.index");
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/dashboard', function () {
+        return to_route("clubs.index");
+    })->middleware(['auth', 'verified'])->name('dashboard');
+
+    Route::get('/pirmas', function (){
+        return Inertia::render('Pirmas', ["sk"=>5]);
+    })->name("pirmas");
+
+
+    Route::get('/antras', function (){
+        return Inertia::render('Antras');
+    })->name("antras");
+
+    Route::post('/users', function (){
+        return Inertia::render('Antras');
+    })->name("users");
+
+    Route::post("/participants/filter", [ParticipantController::class, "filter"])->name("participants.filter");
+    Route::get("/participants/order/{field}/{dir}", [ParticipantController::class, "order"])->name("participants.order");
+
+
+    Route::resource('clubs', ClubController::class)->only([
+        'index'
+    ]);
+    Route::resource('participants', ParticipantController::class);
+
 });
 
-require __DIR__.'/auth.php';
-
-Route::get('/pirmas', function (){
-   return Inertia::render('Pirmas', ["sk"=>5]);
-})->name("pirmas");
-
-
-Route::get('/antras', function (){
-    return Inertia::render('Antras');
-})->name("antras");
-
-Route::post('/users', function (){
-    return Inertia::render('Antras');
-})->name("users");
-
-Route::post("/participants/filter", [ParticipantController::class, "filter"])->name("participants.filter");
-Route::get("/participants/order/{field}/{dir}", [ParticipantController::class, "order"])->name("participants.order");
-
-
-Route::resource('clubs', ClubController::class)->only([
-    'index'
-]);
-
-Route::middleware("editClubs")->group( function(){
+Route::middleware(["auth","editClubs"])->group( function(){
     Route::resource('clubs', ClubController::class)->except([
         'index'
     ]);
 });
 
-Route::resource('participants', ParticipantController::class);
+Route::get("/lang/{lang}", [\App\Http\Controllers\LangController::class, "setLanguage"])->name("setLanguage");
+
+require __DIR__.'/auth.php';
+
+
 
 

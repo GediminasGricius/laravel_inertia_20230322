@@ -32,7 +32,7 @@ export default function Index(props){
             <tr key={participant.id}>
                 <td>{ participant.name}</td>
                 <td>{ participant.surname}</td>
-                <td>{ participant.club.name}</td>
+                <td>{ participant.club!=null?participant.club.name:"Nepriskirtas"}</td>
                 <td className="text-center">
 
                 </td>
@@ -55,7 +55,7 @@ export default function Index(props){
             >
             <div className="col-md-12 mt-5">
                 <div className="card">
-                    <div className="card-header">Dalyvių sąrašas</div>
+                    <div className="card-header">{ props.lang.participants }</div>
                     <div className="card-body">
 
                         <Link className="btn btn-success float-end" href={ route("participants.create") }>Pridėti naują dalyvį</Link>

@@ -31,6 +31,9 @@ class ParticipantController extends Controller
                 "clubs"=>Club::all(),
                 "filter"=>$filter,
                 "order"=>$order,
+                "lang"=>[
+                    "participants"=>__("app.participants")
+                ]
            ]);
     }
 
@@ -55,7 +58,7 @@ class ParticipantController extends Controller
            'birth_day'=>'required',
             'club_id'=>'required',
         ],
-        ['name'=>"Vardas yra privalomas ir ne trumpesnis nei 3 simboliai"]);
+        ['name'=>__("Name is required and ...")]);
 
         $participant=new Participant();
         $participant->name=$request->name;
